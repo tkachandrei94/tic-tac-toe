@@ -28,15 +28,15 @@ export default class GameController {
     }
 
     _startGame() {
-        // this.gameUI.showAd(() => {
-        this._resetGame();
-        // });
+        this.gameUI.showAd(() => {
+            this._resetGame();
+        });
     }
 
     _startNewRoundWithAd() {
-        // this.gameUI.showAd(() => {
-        this._resetGame();
-        // });
+        this.gameUI.showAd(() => {
+            this._resetGame();
+        });
     }
 
     _exitGame() {
