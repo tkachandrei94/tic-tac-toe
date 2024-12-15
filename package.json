@@ -1,0 +1,30 @@
+{
+    "name": "ttt",
+    "version": "1.0.0",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint js",
+        "dev": "webpack serve --mode development",
+        "start": "webpack serve --mode development",
+        "build": "webpack --mode production"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "@babel/core": "^7.26.0",
+        "@babel/preset-env": "^7.26.0",
+        "@eslint/js": "^9.16.0",
+        "babel-loader": "^9.2.1",
+        "css-loader": "^7.1.2",
+        "eslint": "^9.16.0",
+        "globals": "^15.13.0",
+        "html-webpack-plugin": "^5.6.3",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.2.0"
+    },
+    "type": "module"
+}
