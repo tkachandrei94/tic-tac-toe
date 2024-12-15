@@ -46,6 +46,8 @@ export default class GameController {
 
     // Exit the game and redirect the user
     _exitGame() {
+        this._resetGame();
+
         window.location.href = 'https://google.com';
     }
 

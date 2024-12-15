@@ -7,8 +7,11 @@
         "lint": "eslint js",
         "dev": "webpack serve --mode development",
         "start": "webpack serve --mode development",
-        "build": "webpack --mode production"
+        "build": "webpack --mode production",
+        "predeploy": "webpack --mode production",
+        "deploy": "gh-pages -d dist"
     },
+    "homepage": "https://tkachandrei94.github.io/tic-tac-toe",
     "author": "",
     "license": "ISC",
     "description": "",
@@ -19,6 +22,7 @@
         "babel-loader": "^9.2.1",
         "css-loader": "^7.1.2",
         "eslint": "^9.16.0",
+        "gh-pages": "^6.2.0",
         "globals": "^15.13.0",
         "html-webpack-plugin": "^5.6.3",
         "style-loader": "^4.0.0",
