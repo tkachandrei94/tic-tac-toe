@@ -6,21 +6,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  // Точка входа для сборки
   entry: './src/index.js',
 
-  // Настройка выхода бандла
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
 
-  // Настройка загрузчиков
   module: {
     rules: [
       {
-        test: /\.js$/, // Обработка JavaScript-файлов
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -30,29 +27,27 @@ export default {
         },
       },
       {
-        test: /\.css$/, // Обработка CSS-файлов
+        test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
     ],
   },
 
-  // Плагины
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html', // Шаблон HTML-файла
+      template: './index.html',
     }),
   ],
 
-  // Локальный сервер разработки
   devServer: {
     static: './dist',
     port: 3000,
-    open: true, // Автоматически открывать браузер
-    hot: true, // Отключаем Hot Module Replacement
-    liveReload: true, // отключение liveReload
+    open: true, 
+    hot: true,
+    liveReload: true,
   },
 
-  devtool: false, // отключаем source maps (или укажите 'inline-source-map' для отладки)
+  devtool: false,
 
-  mode: 'development', // Режим разработки (development или production)
+  mode: 'development', 
 };

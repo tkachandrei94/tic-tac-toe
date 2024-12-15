@@ -1,10 +1,10 @@
+/* global google */
+
 export default class GameUI {
     constructor({ onCellClick, onNewGame, onExitGame, onStartGame }) {
         this.boardEl = document.getElementById('board');
         this.currentPlayerInfo = document.getElementById('current-player-info');
         this.resultInfo = document.getElementById('result-info');
-
-        this.newGameButton = document.getElementById('new-game-button');
 
         this.startModal = document.getElementById('start-modal');
         this.startModalContent = document.getElementById('start-modal-content');
@@ -25,7 +25,6 @@ export default class GameUI {
 
     _initializeEventListeners() {
         this.boardEl.addEventListener('click', (e) => this._handleCellClick(e));
-        this.newGameButton.addEventListener('click', () => this.onNewGame());
 
         document.addEventListener('keydown', (e) => this._handleKeyPress(e));
         document.addEventListener('keydown', (e) =>
@@ -64,7 +63,7 @@ export default class GameUI {
     _handleCellClick(event) {
         if (!event.target.classList.contains('cell')) return;
 
-        event.preventDefault(); // Остановка стандартного действия
+        event.preventDefault();
 
         const i = parseInt(event.target.getAttribute('data-i'));
         const j = parseInt(event.target.getAttribute('data-j'));
@@ -89,7 +88,7 @@ export default class GameUI {
                 this._selectCell(i, Math.min(maxIndex, j + 1));
                 break;
             case 'Enter':
-                this.onCellClick(i, j); // Делаем ход в выбранную ячейку
+                this.onCellClick(i, j);
                 break;
             case 'Backspace':
                 this.onExitGame();
@@ -125,13 +124,8 @@ export default class GameUI {
                 board.getCell(i, j) === '' ? 'pointer' : 'default';
         });
 
-        this._highlightSelectedCell(); // Обновляем выделение
+        this._highlightSelectedCell();
     }
-
-    // updateCurrentPlayer(playerSymbol) {
-    //     const playerName = playerSymbol === 'X' ? 'Человек' : 'Компьютер';
-    //     this.resultInfo.textContent = `Ходит игрок: ${playerName}`;
-    // }
 
     showCurrentPlayer(playerName) {
         this.resultInfo.textContent = `Ходит игрок: ${playerName}`;
@@ -185,7 +179,6 @@ export default class GameUI {
     }
 
     showEndModal(message) {
-        console.log('showEndModal');
         this.endModalContent.innerHTML = `
             <p>${message}</p>
             <p>Нажмите <strong>Enter</strong> чтобы сыграть ещё раз или <strong>Backspace</strong> для выхода</p>
@@ -202,5 +195,55 @@ export default class GameUI {
         this.endModal.classList.remove('visible');
         this.endModal.classList.add('hidden');
         this._endModalActive = false;
+    }
+
+    showAd(onAdComplete) {
+        const adContainer = document.getElementById('ad-container');
+        const adVideoElement = document.getElementById('ad-video');
+        adContainer.classList.remove('hidden');
+
+        const adDisplayContainer = new google.ima.AdDisplayContainer(
+            adContainer,
+            adVideoElement
+        );
+        adDisplayContainer.initialize();
+
+        const adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+
+        adsLoader.addEventListener(
+            google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+            (adsManagerLoadedEvent) => {
+                const adsManager =
+                    adsManagerLoadedEvent.getAdsManager(adVideoElement);
+                adsManager.init(
+                    adContainer.offsetWidth,
+                    adContainer.offsetHeight,
+                    google.ima.ViewMode.NORMAL
+                );
+                adsManager.start();
+
+                adsManager.addEventListener(
+                    google.ima.AdEvent.Type.COMPLETE,
+                    () => {
+                        adContainer.classList.add('hidden');
+                        onAdComplete(); 
+                    }
+                );
+            }
+        );
+
+        const adsRequest = new google.ima.AdsRequest();
+        adsRequest.adTagUrl =
+            'https://pubads.g.doubleclick.net/gampad/ads?' +
+            'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
+            'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
+            'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=';
+
+        adsLoader.requestAds(adsRequest);
+    }
+
+    _removeSelectedHighlight() {
+        const cells = this.boardEl.querySelectorAll('.cell');
+        cells.forEach((cell) => cell.classList.remove('selected-cell'));
     }
 }

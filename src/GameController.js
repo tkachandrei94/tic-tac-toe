@@ -14,7 +14,7 @@ export default class GameController {
 
         this.gameUI = new GameUI({
             onCellClick: (i, j) => this._handleCellClick(i, j),
-            onNewGame: () => this._resetGame(),
+            onNewGame: () => this._startNewRoundWithAd(),
             onExitGame: () => this._exitGame(),
             onStartGame: () => this._startGame(),
         });
@@ -28,7 +28,15 @@ export default class GameController {
     }
 
     _startGame() {
+        // this.gameUI.showAd(() => {
         this._resetGame();
+        // });
+    }
+
+    _startNewRoundWithAd() {
+        // this.gameUI.showAd(() => {
+        this._resetGame();
+        // });
     }
 
     _exitGame() {
@@ -43,21 +51,21 @@ export default class GameController {
         this._updateUI();
         this.gameUI.showResult(result);
 
+        console.log('_handleCellClick result', result);
+
         if (result.status === 'win' || result.status === 'draw') {
             this._showEndModal(result);
         } else {
             this._checkAndPlayComputerMove();
         }
-
-        // if (this.game.isGameOver()) return;
-
-        // this._checkAndPlayComputerMove();
     }
 
     _showEndModal(result) {
         const message =
             result.status === 'win'
-                ? `Победил игрок ${result.winner === 'X' ? 'Человек' : 'Компьютер'}`
+                ? `Победил игрок ${
+                      result.winner === 'X' ? 'Человек' : 'Компьютер'
+                  }`
                 : 'Ничья!';
         this.gameUI.showEndModal(message);
     }
@@ -74,6 +82,12 @@ export default class GameController {
             this._updateUI();
 
             this.gameUI.showResult(result);
+
+            if (result.status === 'win' || result.status === 'draw') {
+                this._showEndModal(result);
+            } else {
+                this._checkAndPlayComputerMove();
+            }
         }, 500);
     }
 

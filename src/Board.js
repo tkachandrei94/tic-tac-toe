@@ -36,7 +36,6 @@ export default class Board {
     }
 
     checkWinner() {
-        // Проверка строк
         for (let i = 0; i < this._size; i++) {
             if (
                 this._grid[i][0] !== '' &&
@@ -46,7 +45,6 @@ export default class Board {
             }
         }
 
-        // Проверка столбцов
         for (let j = 0; j < this._size; j++) {
             const col = [this._grid[0][j], this._grid[1][j], this._grid[2][j]];
             if (col[0] !== '' && col.every((cell) => cell === col[0])) {
@@ -54,7 +52,6 @@ export default class Board {
             }
         }
 
-        // Проверка диагоналей
         const diag1 = [this._grid[0][0], this._grid[1][1], this._grid[2][2]];
         if (diag1[0] !== '' && diag1.every((cell) => cell === diag1[0])) {
             return diag1[0];
@@ -69,7 +66,6 @@ export default class Board {
     }
 
     getWinningLine() {
-        // Проверка строк
         for (let i = 0; i < this._size; i++) {
             if (
                 this._grid[i][0] !== '' &&
@@ -86,7 +82,6 @@ export default class Board {
             }
         }
 
-        // Проверка столбцов
         for (let j = 0; j < this._size; j++) {
             const col = [this._grid[0][j], this._grid[1][j], this._grid[2][j]];
             if (col[0] !== '' && col.every((cell) => cell === col[0])) {
@@ -101,7 +96,6 @@ export default class Board {
             }
         }
 
-        // Проверка диагонали сверху слева направо вниз
         const diag1 = [this._grid[0][0], this._grid[1][1], this._grid[2][2]];
         if (diag1[0] !== '' && diag1.every((cell) => cell === diag1[0])) {
             return {
@@ -114,7 +108,6 @@ export default class Board {
             };
         }
 
-        // Проверка диагонали сверху справа налево вниз
         const diag2 = [this._grid[0][2], this._grid[1][1], this._grid[2][0]];
         if (diag2[0] !== '' && diag2.every((cell) => cell === diag2[0])) {
             return {
@@ -127,7 +120,6 @@ export default class Board {
             };
         }
 
-        // Если победителя нет
         return null;
     }
 }

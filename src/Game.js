@@ -25,7 +25,6 @@ export default class Game {
         this._gameOver = false;
     }
 
-    // Сделать ход (человек)
     makeMove(i, j) {
         if (this._gameOver) return null;
 
@@ -37,10 +36,9 @@ export default class Game {
             return result;
         }
 
-        return { status: 'invalid' }; // Неверный ход
+        return { status: 'invalid' };
     }
 
-    // Сделать ход (компьютер)
     computerMove() {
         if (this._gameOver || this._currentPlayer !== this._computerPlayer)
             return null;
@@ -53,6 +51,7 @@ export default class Game {
         this._board.setCell(move.i, move.j, this._computerPlayer.symbol);
 
         const result = this._checkResult();
+        console.log('computerMove result', result)
         if (!this._gameOver) this.switchPlayer();
 
         return result;
@@ -61,6 +60,7 @@ export default class Game {
     _checkResult() {
         const winInfo = this._board.getWinningLine();
 
+        console.log('winInfo', winInfo)
         if (winInfo) {
             this._gameOver = true;
             return {
@@ -79,7 +79,6 @@ export default class Game {
         return { status: 'continue' };
     }
 
-    // Смена текущего игрока
     switchPlayer() {
         this._currentPlayer =
             this._currentPlayer._symbol === this._humanPlayer._symbol
