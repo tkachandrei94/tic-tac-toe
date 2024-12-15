@@ -15,34 +15,64 @@ export default class GameController {
         this.gameUI = new GameUI({
             onCellClick: (i, j) => this._handleCellClick(i, j),
             onNewGame: () => this._resetGame(),
+            onExitGame: () => this._exitGame(),
+            onStartGame: () => this._startGame(),
         });
 
-        this._startGame();
-        console.log('GameController constructor')
+        this._showStartModal();
+        this._updateUI();
+    }
 
+    _showStartModal() {
+        this.gameUI.showStartModal();
     }
 
     _startGame() {
-        this._updateUI();
-        this._checkAndPlayComputerMove();
+        this._resetGame();
+    }
+
+    _exitGame() {
+        window.location.href = 'https://google.com';
     }
 
     _handleCellClick(i, j) {
-        if (this.game.isGameOver() || this.game.isCurrentPlayerComputer()) return;
+        if (this.game.isGameOver() || this.game.isCurrentPlayerComputer())
+            return;
 
         const result = this.game.makeMove(i, j);
         this._updateUI();
         this.gameUI.showResult(result);
 
-        this._checkAndPlayComputerMove();
+        if (result.status === 'win' || result.status === 'draw') {
+            this._showEndModal(result);
+        } else {
+            this._checkAndPlayComputerMove();
+        }
+
+        // if (this.game.isGameOver()) return;
+
+        // this._checkAndPlayComputerMove();
+    }
+
+    _showEndModal(result) {
+        const message =
+            result.status === 'win'
+                ? `Победил игрок ${result.winner === 'X' ? 'Человек' : 'Компьютер'}`
+                : 'Ничья!';
+        this.gameUI.showEndModal(message);
     }
 
     _checkAndPlayComputerMove() {
-        if (!this.game.isCurrentPlayerComputer() || this.game.isGameOver()) return;
+        if (!this.game.isCurrentPlayerComputer() || this.game.isGameOver())
+            return;
 
         setTimeout(() => {
+            if (!this.game.isCurrentPlayerComputer() || this.game.isGameOver())
+                return;
+
             const result = this.game.computerMove();
             this._updateUI();
+
             this.gameUI.showResult(result);
         }, 500);
     }
@@ -56,6 +86,8 @@ export default class GameController {
 
     _updateUI() {
         this.gameUI.renderBoard(this.board);
-        this.gameUI.updateCurrentPlayer(this.game.currentPlayerSymbol);
+        const currentPlayerName =
+            this.game.currentPlayerSymbol === 'X' ? 'Человек' : 'Компьютер';
+        this.gameUI.showCurrentPlayer(currentPlayerName);
     }
 }

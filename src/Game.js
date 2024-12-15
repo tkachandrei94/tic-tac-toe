@@ -6,17 +6,13 @@ export default class Game {
         this._humanPlayer = humanPlayer;
         this._computerPlayer = computerPlayer;
 
-        this.reset(); // Начальная инициализация
-
-        console.log('Game constructor')
+        this.reset();
     }
 
-    // Возвращает символ текущего игрока
     get currentPlayerSymbol() {
         return this._currentPlayer.symbol;
     }
 
-    // Сброс состояния игры
     reset() {
         this._board.reset();
         const firstSymbol = getRandomPlayerSymbol();
@@ -57,13 +53,11 @@ export default class Game {
         this._board.setCell(move.i, move.j, this._computerPlayer.symbol);
 
         const result = this._checkResult();
-
         if (!this._gameOver) this.switchPlayer();
 
         return result;
     }
 
-    // Проверить результат хода
     _checkResult() {
         const winInfo = this._board.getWinningLine();
 
@@ -91,16 +85,12 @@ export default class Game {
             this._currentPlayer._symbol === this._humanPlayer._symbol
                 ? this._computerPlayer
                 : this._humanPlayer;
-
-        console.log('* * * this._currentPlayer * * * ', this._currentPlayer);
     }
 
-    // Проверить, завершена ли игра
     isGameOver() {
         return this._gameOver;
     }
 
-    // Проверить, является ли текущий игрок компьютером
     isCurrentPlayerComputer() {
         return this._currentPlayer._symbol === this._computerPlayer._symbol;
     }

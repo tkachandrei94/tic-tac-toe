@@ -26,11 +26,13 @@
     <button id="new-game-button">Новая игра</button>
   </div>
 
-  <div id="game-modal" class="modal hidden">
-    <div class="modal-content">
-      <p>Вы хотите играть?</p>
-      <p>Нажмите <strong>Enter</strong> для игры, <strong>Backspace</strong> для выхода.</p>
-    </div>
+  <div id="start-modal" class="modal hidden">
+    <div class="modal-content" id="start-modal-content"></div>
+  </div>
+
+  <!-- Модальное окно конца игры -->
+  <div id="end-modal" class="modal hidden">
+    <div class="modal-content" id="end-modal-content"></div>
   </div>
 </body>
 <script src="bundle.js"></script>

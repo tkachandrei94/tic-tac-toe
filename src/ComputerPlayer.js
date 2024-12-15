@@ -9,11 +9,8 @@ export default class ComputerPlayer extends Player {
   // Делает случайный ход из доступных
   makeMove(board) {
     const availableMoves = this._getAvailableMoves(board);
-    console.log('availableMoves', availableMoves);
     
-    if (availableMoves.length === 0) return null; // Если ходов нет, возвращаем null
-
-    // Случайный выбор хода
+    if (availableMoves.length === 0) return null;
     return this._getRandomMove(availableMoves);
   }
 
