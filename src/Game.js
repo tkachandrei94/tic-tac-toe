@@ -7,6 +7,8 @@ export default class Game {
         this._computerPlayer = computerPlayer;
 
         this.reset(); // Начальная инициализация
+
+        console.log('Game constructor')
     }
 
     // Возвращает символ текущего игрока

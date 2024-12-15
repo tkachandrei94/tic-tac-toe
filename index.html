@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Крестики-нолики: Человек против Компьютера</title>
-  </head>
-  <body>
-    <h1>Крестики-нолики</h1>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Крестики-нолики: Человек против Компьютера</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Крестики-нолики</h1>
     <div class="info" id="current-player-info"></div>
     <div class="board" id="board">
       <div class="cell" data-i="0" data-j="0"></div>
@@ -20,11 +22,17 @@
       <div class="cell" data-i="2" data-j="1"></div>
       <div class="cell" data-i="2" data-j="2"></div>
     </div>
-
     <div class="info" id="result-info"></div>
     <button id="new-game-button">Новая игра</button>
+  </div>
 
-    <!-- Бандл Webpack -->
-    <script src="bundle.js"></script>
-  </body>
+  <div id="game-modal" class="modal hidden">
+    <div class="modal-content">
+      <p>Вы хотите играть?</p>
+      <p>Нажмите <strong>Enter</strong> для игры, <strong>Backspace</strong> для выхода.</p>
+    </div>
+  </div>
+</body>
+<script src="bundle.js"></script>
+
 </html>
