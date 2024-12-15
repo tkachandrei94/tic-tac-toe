@@ -1,4 +1,4 @@
-import Player from './Player.js';
+import Player from '../Player.js';
 import { BOARD_SIZE } from './constants.js';
 
 export default class ComputerPlayer extends Player {
